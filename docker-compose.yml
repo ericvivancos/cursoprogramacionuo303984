@@ -36,7 +36,7 @@ services:
     image: mariadb:latest
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: giftlist
+      MYSQL_DATABASE: uo303984
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
