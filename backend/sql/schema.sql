@@ -1,13 +1,17 @@
-CREATE DATABASE `uo303984`
- --Tabla de usuarios
-CREATE TABLE users (
+CREATE DATABASE IF NOT EXISTS uo303984;
+USE uo303984;
+
+-- Creamos la tabla de usuarios
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
--- Tabla de regalos
-CREATE TABLE presents (
+
+-- Creamos la tabla de regalos
+CREATE TABLE IF NOT EXISTS presents (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     name VARCHAR(255) NOT NULL,
@@ -17,11 +21,12 @@ CREATE TABLE presents (
     chosen_by VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
--- Tabla de amigos
-CREATE TABLE friends (
+
+-- Creamos la tabla de amigos
+CREATE TABLE IF NOT EXISTS friends (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    main_user_email VARCHAR(255) NOT NULL,
-    friend_email VARCHAR(255) NOT NULL,
-    FOREIGN KEY (main_user_email) REFERENCES users(email),
-    FOREIGN KEY (friend_email) REFERENCES users(email)
+    main_user_id INT,
+    friend_user_id INT,
+    FOREIGN KEY (main_user_id) REFERENCES users(id),
+    FOREIGN KEY (friend_user_id) REFERENCES users(id)
 );

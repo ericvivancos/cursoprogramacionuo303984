@@ -12,6 +12,8 @@ services:
       - /app/node_modules
     depends_on:
       - mariadb
+    command: npm run dev  # Usa nodemon para desarrollo
+
   frontend-html-css:
     build:
       context: ./frontend-html-css
@@ -22,6 +24,7 @@ services:
       - /app/node_modules
     depends_on:
       - backend
+
   frontend-ant-design:
     build:
       context: ./frontend-ant-design
@@ -32,8 +35,10 @@ services:
       - /app/node_modules
     depends_on:
       - backend
+
   mariadb:
     image: mariadb:latest
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: uo303984
@@ -43,6 +48,18 @@ services:
       - '3306:3306'
     volumes:
       - mariadb-data:/var/lib/mysql
+      - ./backend/sql:/docker-entrypoint-initdb.d/
+      
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - '8080:80'
+    depends_on:
+      - mariadb
 
 volumes:
   mariadb-data:
