@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {query} = require("../database");
 const presentRepository = require('../repositories/presentRepository');
+const friendRepository = require("../repositories/friendRepository");
 const secret = process.env.JWT_SECRET;
 
 // Middleware para autenticación de tokens
@@ -28,6 +29,25 @@ module.exports = {
         if(present.user_id !== req.user.id) {
             return res.status(403).json({ error: "No tiene permiso para acceder a este regalo"});
         }
+        next();
+    },
+    /**
+     * Verifica que el usuario no se añada a sí mismo como amigo y que no sean amigos ya
+     */
+    authFriends: async (req,res,next) => {
+        const { email } = req.body;
+        const { email: mainUserEmail } = req.user;
+
+        if (email === mainUserEmail) {
+            return res.status(400).json({ error: "No puedes agregarte a ti mismo como amigo" });
+        }
+        
+        // Verifica si ya son amigos
+        const areFriends = await friendRepository.areFriends(mainUserEmail, email);
+        if (areFriends) {
+            return res.status(400).json({ error: "Ya son amigos" });
+        }
+
         next();
     }
 };

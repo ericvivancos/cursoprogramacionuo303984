@@ -13,6 +13,10 @@ const presentService = require("./services/presentService");
 // Rutas
 require("./routers/userRouter")(app,userService);
 require("./routers/presentRouter")(app,userService,presentService);
+const friendRouter = require("./routers/friendRouter");
+
+// Agregamos enrutadores
+friendRouter(app);
 
 const startServer = async () => {
     try {

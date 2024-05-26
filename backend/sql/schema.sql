@@ -6,7 +6,7 @@ USE uo303984;
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -25,12 +25,13 @@ CREATE TABLE IF NOT EXISTS presents (
 
 -- Creamos la tabla de amigos
 CREATE TABLE IF NOT EXISTS friends (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    main_user_id INT,
-    friend_user_id INT,
-    FOREIGN KEY (main_user_id) REFERENCES users(id),
-    FOREIGN KEY (friend_user_id) REFERENCES users(id)
+  emailMainUser VARCHAR(255) NOT NULL,
+  emailFriend VARCHAR(255) NOT NULL,
+  PRIMARY KEY (emailMainUser, emailFriend),
+  FOREIGN KEY (emailMainUser) REFERENCES users(email),
+  FOREIGN KEY (emailFriend) REFERENCES users(email)
 );
+
 
 -- Tabla de claves activas
 CREATE TABLE active_keys (
