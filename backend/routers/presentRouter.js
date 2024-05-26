@@ -49,14 +49,32 @@ module.exports = function(app,userService,presentService){
     * @returns {Object} El regalo encontrado.
     * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
     */
-    app.get("/presents/:id", authMiddleware.authenticationToken, async(req,res) => {
-        const presentId = req.params.id;
+    app.get("/presents/:id", authMiddleware.authenticationToken,authMiddleware.verifyPresentOwner, async(req,res) => {
+        const presentId = parseInt(req.params.id, 10);
         try{
             const present = await presentService.getPresentById(req.user.id, presentId);
             res.status(200).json(present);
         } catch (error) {
             console.error("Error al obtener el regalo:", error.message);
             res.status(403).json({ error: error.message});
+        }
+    });
+    /**
+    * Elimina un regalo por su ID.
+    * @name DELETE/presents/:id
+    * @param {string} apiKey - La apiKey del usuario.
+    * @param {number} id - El ID del regalo.
+    * @returns {Object} Un mensaje indicando si la eliminación fue exitosa.
+    * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
+    */
+    app.delete("/presents/:id", authMiddleware.authenticationToken, authMiddleware.verifyPresentOwner, async(req,res) => {
+        const presentId = parseInt(req.params.id,10);
+        try{
+            await presentService.deletePresent(presentId);
+            res.status(200).json({ message: "Regalo eliminado exitosamente"});
+        } catch(error) {
+            console.error("Error al eliminar regalo:", error.message);
+            res.status(500).json({ error: error.message});
         }
     });
 }

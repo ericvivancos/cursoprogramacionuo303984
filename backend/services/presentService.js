@@ -1,5 +1,6 @@
 const presentRepository = require("../repositories/presentRepository");
 const { validatePresentData } = require("../validators/presentValidator");
+const authMiddleware = require('../middlewares/authMiddleware');
 module.exports = {
     /**
      * Crea un nuevo regalo después de validar los datos.
@@ -32,17 +33,18 @@ module.exports = {
     * @returns {Object} El regalo encontrado.
     * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
     */
-    getPresentById: async (userId, presentId) => {
-        console.log(presentId);
+    getPresentById:  async (userId, presentId) => {
       const present = await presentRepository.getPresentById(presentId);
-      if (!present) {
-        throw new Error("Regalo no encontrado");
-      }
-      console.log(present);
-      if (present.user_id !== userId) {
-        throw new Error("No tiene permiso para ver este regalo");
-      }
       return present;
-    }
+    },
+    /**
+    * Elimina un regalo por su ID después de verificar que pertenece al usuario autenticado.
+    * @param {number} presentId - El ID del regalo.
+    * @returns {Promise<void>}
+    * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
+    */
+    deletePresent: async ( presentId) => {      
+       return await presentRepository.deletePresent(presentId);
+      }
     
 }

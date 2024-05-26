@@ -32,5 +32,13 @@ module.exports = {
     getPresentById: async (id) => {
       const result = await query('SELECT * FROM presents WHERE id = ?', [id]);
       return result[0]; // Suponiendo que el ID es único y solo hay un regalo con ese ID
+    },
+    /**
+    * Elimina un regalo por su ID.
+    * @param {number} id - El ID del regalo.
+    * @returns {Promise<void>}
+    */
+    deletePresent: async (id) => {
+       return await query('DELETE FROM presents WHERE id = ?', [id]);
     }
 }
