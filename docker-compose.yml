@@ -38,7 +38,6 @@ services:
 
   mariadb:
     image: mariadb:latest
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: uo303984
@@ -49,7 +48,8 @@ services:
     volumes:
       - mariadb-data:/var/lib/mysql
       - ./backend/sql:/docker-entrypoint-initdb.d/
-      
+    command: --init-file /docker-entrypoint-initdb.d/schema.sql 
+    
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
