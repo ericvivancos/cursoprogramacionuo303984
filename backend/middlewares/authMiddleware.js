@@ -5,7 +5,7 @@ const secret = process.env.JWT_SECRET;
 // Middleware para autenticación de tokens
 module.exports = {
     authenticationToken: (req,res,next) => {
-        const token = req.header('Authoritation')?.split(' ')[1];
+        const token = req.header('Authorization')?.split(' ')[1];
         if(!token) return res.status(401).json({error: 'Acceso denegado'});
 
         jwt.verify(token,secret, (err, user) => {

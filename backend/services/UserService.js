@@ -42,5 +42,22 @@ module.exports = {
         const token = generateToken(user);
         await userRepository.storeApiKey(user.id,token);
         return token;
+    },
+    /**
+    * Cierra la sesión de un usuario, eliminando la apiKey de la lista de claves activas.
+    * @param {number} apiKey - el apiKey que queremos cerrar sesión
+    * @returns {Promise<void>} Una promesa que indica que la sesión se ha cerrado correctamente.
+    * @throws {Error} Se lanza un error si ocurre algún problema al cerrar la sesión del usuario.
+    */
+    disconnectUser: async (apiKey) => {
+        try {
+            const existingApiKey = await userRepository.getApiKey(apiKey);
+            if(!existingApiKey){
+                throw new Error("La apiKey proporcionada no existe");
+            }
+            await userRepository.deleteApiKey(apiKey);
+        } catch (error) {
+            throw new Error("Error al cerrar la sesión del usuario: " + error.message);
+        }
     }
 };
