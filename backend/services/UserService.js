@@ -1,5 +1,7 @@
+const bcrypt = require('bcrypt');
 const userRepository = require("../repositories/userRepository");
 const validator = require("../validators/userValidator");
+const { generateToken } = require('../utils/jwt');
 
 module.exports = {
     /**
@@ -17,8 +19,28 @@ module.exports = {
         if(existingUser){
             throw new Error("Ya existe un usuario con este email");
         }
-
-        const user = await userRepository.createUser(email,name,password);
+        const hashedPassword = await bcrypt.hash(password,10)
+        const user = await userRepository.createUser(email,name,hashedPassword);
         return user;
+    },
+    /**
+     * Maneja el proceso de inicio de sesión del usuario.
+     * @param {string} email - El correo electrónico del usuario.
+     * @param {string} password - La contraseña del usuario.
+     * @returns {string} La apiKey generada para el usuario.
+     * @throws {Error} Se lanza un error si las credenciales son incorrectas.
+     */
+    loginUser: async (email,password) => {
+        const user = await userRepository.getUserByEmail(email);
+        if(!user){
+            throw new Error("Credenciales incorrectas");
+        }
+        const isMatch = await bcrypt.compare(password,user.password);
+        if(!isMatch){
+            throw new Error("Credenciales incorrectas");
+        }
+        const token = generateToken(user);
+        await userRepository.storeApiKey(user.id,token);
+        return token;
     }
 };

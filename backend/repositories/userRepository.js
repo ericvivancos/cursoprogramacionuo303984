@@ -23,5 +23,14 @@ module.exports = {
   getUserByEmail: async (email) => {
     const result = await query('SELECT * FROM users WHERE email = ?', [email]);
     return result[0]; // Suponiendo que el email es único y solo hay un usuario con ese email
-}
+  },
+
+  /**
+   * Almacena una apiKey para un usuario en la base de datos.
+   * @param {number} userId - El ID del usuario para el que se almacenará la apiKey.
+   * @param {string} apiKey - La apiKey que se almacenará para el usuario.
+   */
+  storeApiKey: async (userId, apiKey) => {
+    await query('INSERT INTO active_keys (user_id, api_key) VALUES (?, ?) ON DUPLICATE KEY UPDATE api_key = VALUES(api_key)', [userId, apiKey]);
+  }
 };

@@ -31,3 +31,10 @@ CREATE TABLE IF NOT EXISTS friends (
     FOREIGN KEY (main_user_id) REFERENCES users(id),
     FOREIGN KEY (friend_user_id) REFERENCES users(id)
 );
+
+-- Tabla de claves activas
+CREATE TABLE active_keys (
+    user_id INT PRIMARY KEY,
+    api_key VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
