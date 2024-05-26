@@ -14,5 +14,14 @@ module.exports = {
         const result = await query('INSERT INTO presents (user_id, name, description, url, price) VALUES (?, ?, ?, ?, ?)', 
             [userId, name, description, url, price]);
         return result;
+    },
+    /**
+    * Obtiene todos los regalos creados por un usuario.
+    * @param {number} userId - El ID del usuario.
+    * @returns {Promise<Array>} Una lista de regalos creados por el usuario.
+    */
+    getPresentsByUserId: async (userId) => {
+    const result = await query('SELECT * FROM presents WHERE user_id = ?', [userId]);
+    return result;
     }
 }

@@ -15,5 +15,15 @@ module.exports = {
         validatePresentData(name, description, url, price);
         const present = await presentRepository.createPresent(userId, name, description, url, price);
         return present;
+    },
+    /**
+    * Obtiene todos los regalos creados por un usuario.
+    * @param {number} userId - El ID del usuario.
+    * @returns {Array} Una lista de regalos creados por el usuario.
+    */
+    getPresentsByUserId: async (userId) => {
+        const presents = await presentRepository.getPresentsByUserId(userId);
+        return presents;
     }
+    
 }

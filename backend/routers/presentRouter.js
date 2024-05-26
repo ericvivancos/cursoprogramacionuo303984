@@ -23,5 +23,22 @@ module.exports = function(app,userService,presentService){
             console.error("Error al crear regalo:", error.message);
             res.status(500).json({ error: error.message });
         }
-    })
+    });
+
+    /**
+    * Lista todos los regalos creados por el usuario autenticado.
+    * @name GET/presents
+    * @param {string} apiKey - La apiKey del usuario.
+    * @returns {Array} Una lista de regalos creados por el usuario.
+    * @throws {Error} Se lanza un error si ocurre algún problema al obtener los regalos.
+    */
+   app.get("/presents",authMiddleware.authenticationToken,async(req,res) => {
+        try{
+            const presents = await presentService.getPresentsByUserId(req.user.id);
+            res.status(200).json(presents);
+        } catch (error) {
+            console.error("Error al obtener regalos:", error.message);
+            res.status(500).json({ error: error.message });
+        }
+   })
 }
