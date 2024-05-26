@@ -3,6 +3,15 @@ const {testConnection} = require("./database");
 const port = process.env.PORT;
 const app = express()
 
+app.use(express.json());
+
+
+// Repositorios
+const userService = require("./services/UserService");
+
+// Rutas
+require("./routers/userRouter")(app,userService);
+
 const startServer = async () => {
     try {
       await testConnection(); // Llamamos a la función de prueba de conexión
