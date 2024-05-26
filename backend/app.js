@@ -6,11 +6,13 @@ const app = express()
 app.use(express.json());
 
 
-// Repositorios
-const userService = require("./services/UserService");
+// Servicios
+const userService = require("./services/userService");
+const presentService = require("./services/presentService");
 
 // Rutas
 require("./routers/userRouter")(app,userService);
+require("./routers/presentRouter")(app,userService,presentService);
 
 const startServer = async () => {
     try {
