@@ -77,4 +77,29 @@ module.exports = function(app,userService,presentService){
             res.status(500).json({ error: error.message});
         }
     });
+    /**
+    * Modifica un regalo por su ID.
+    * @name PUT/presents/:id
+    * @param {string} apiKey - La apiKey del usuario.
+    * @param {number} id - El ID del regalo.
+    * @param {Object} presentData - Los datos del regalo a modificar.
+    * @param {string} presentData.name - El nombre del regalo.
+    * @param {string} presentData.description - La descripción del regalo.
+    * @param {string} presentData.url - La URL del regalo.
+    * @param {number} presentData.price - El precio del regalo.
+    * @returns {Object} Un mensaje indicando si la modificación fue exitosa.
+    * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
+    */
+    app.put("/presents/:id", authMiddleware.authenticationToken, authMiddleware.verifyPresentOwner, async (req,res) => {
+        const presentId = parseInt(req.params.id,10);
+        const presentData = req.body;
+
+        try{
+            await presentService.updatePresent(req.user.id, presentId, presentData);
+            res.status(200).json({ message: "Regalo modificado exitosamente"});
+        } catch (error) {
+            console.error("Error al modificar regalo:", error.message);
+            res.status(500).json({ error: error.message});
+        }
+    });
 }

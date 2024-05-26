@@ -45,6 +45,24 @@ module.exports = {
     */
     deletePresent: async ( presentId) => {      
        return await presentRepository.deletePresent(presentId);
-      }
-    
+      },
+    /**
+    * Modifica un regalo existente.
+    * @param {number} userId - El ID del usuario autenticado.
+    * @param {number} presentId - El ID del regalo.
+    * @param {Object} presentData - Los datos del regalo a modificar.
+    * @param {string} presentData.name - El nombre del regalo.
+    * @param {string} presentData.description - La descripción del regalo.
+    * @param {string} presentData.url - La URL del regalo.
+    * @param {number} presentData.price - El precio del regalo.
+    * @returns {Promise<void>}
+    * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
+      */
+    updatePresent: async (userId, presentId, presentData) => {
+      
+      // Validar los datos del regalo
+      validatePresentData(presentData.name, presentData.description, presentData.url, presentData.price);
+
+      await presentRepository.updatePresent(presentId, presentData);
+    }    
 }

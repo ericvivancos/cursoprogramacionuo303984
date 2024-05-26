@@ -40,5 +40,22 @@ module.exports = {
     */
     deletePresent: async (id) => {
        return await query('DELETE FROM presents WHERE id = ?', [id]);
+    },
+    /**
+    * Actualiza un regalo en la base de datos.
+    * @param {number} id - El ID del regalo.
+    * @param {Object} presentData - Los datos del regalo a modificar.
+    * @param {string} presentData.name - El nombre del regalo.
+    * @param {string} presentData.description - La descripción del regalo.
+    * @param {string} presentData.url - La URL del regalo.
+    * @param {number} presentData.price - El precio del regalo.
+    * @returns {Promise<void>}
+    */
+    updatePresent: async (id, presentData) => {
+      const { name, description, url, price } = presentData;
+      await query(
+        'UPDATE presents SET name = ?, description = ?, url = ?, price = ? WHERE id = ?',
+        [name, description, url, price, id]
+      );
     }
 }
