@@ -40,5 +40,23 @@ module.exports = function(app,userService,presentService){
             console.error("Error al obtener regalos:", error.message);
             res.status(500).json({ error: error.message });
         }
-   })
+   });
+    /**
+    * Obtiene un regalo por su ID.
+    * @name GET/presents/:id
+    * @param {string} apiKey - La apiKey del usuario.
+    * @param {number} id - El ID del regalo.
+    * @returns {Object} El regalo encontrado.
+    * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
+    */
+    app.get("/presents/:id", authMiddleware.authenticationToken, async(req,res) => {
+        const presentId = req.params.id;
+        try{
+            const present = await presentService.getPresentById(req.user.id, presentId);
+            res.status(200).json(present);
+        } catch (error) {
+            console.error("Error al obtener el regalo:", error.message);
+            res.status(403).json({ error: error.message});
+        }
+    });
 }

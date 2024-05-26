@@ -24,6 +24,25 @@ module.exports = {
     getPresentsByUserId: async (userId) => {
         const presents = await presentRepository.getPresentsByUserId(userId);
         return presents;
+    },
+    /**
+    * Obtiene un regalo por su ID y verifica que pertenece al usuario autenticado.
+    * @param {number} userId - El ID del usuario autenticado.
+    * @param {number} presentId - El ID del regalo.
+    * @returns {Object} El regalo encontrado.
+    * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
+    */
+    getPresentById: async (userId, presentId) => {
+        console.log(presentId);
+      const present = await presentRepository.getPresentById(presentId);
+      if (!present) {
+        throw new Error("Regalo no encontrado");
+      }
+      console.log(present);
+      if (present.user_id !== userId) {
+        throw new Error("No tiene permiso para ver este regalo");
+      }
+      return present;
     }
     
 }

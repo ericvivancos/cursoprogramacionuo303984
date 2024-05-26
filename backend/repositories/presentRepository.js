@@ -23,5 +23,14 @@ module.exports = {
     getPresentsByUserId: async (userId) => {
     const result = await query('SELECT * FROM presents WHERE user_id = ?', [userId]);
     return result;
+    },
+    /**
+    * Obtiene un regalo por su ID.
+    * @param {number} id - El ID del regalo.
+    * @returns {Promise<object|null>} El regalo encontrado o null si no se encuentra ninguno.
+    */
+    getPresentById: async (id) => {
+      const result = await query('SELECT * FROM presents WHERE id = ?', [id]);
+      return result[0]; // Suponiendo que el ID es único y solo hay un regalo con ese ID
     }
 }
