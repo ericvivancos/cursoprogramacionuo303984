@@ -43,14 +43,36 @@ module.exports = {
             return res.status(400).json({ error: "No puedes agregarte a ti mismo como amigo" });
         }
         // Verificar si el amigo existe en el sistema
-        const friend = await userRepository.getUserByEmail(email);
-        if (!friend) {
+        const user = await userRepository.getUserByEmail(email);
+        if (!user) {
             return res.status(404).json({ error: "El usuario no existe en el sistema"});
         }
         // Verifica si ya son amigos
         const areFriends = await friendRepository.areFriends(mainUserEmail, email);
         if (areFriends) {
             return res.status(400).json({ error: "Ya son amigos" });
+        }
+
+        next();
+    },
+    // Autorización para eliminar un amigo
+    authDeleteFriend: async (req,res,next) => {
+        const {email} = req.params;
+        const {email: mainUserEmail} = req.user;
+        console.log(mainUserEmail);
+
+        if (email === mainUserEmail) {
+            return res.status(400).json({ error: "No puedes eliminarte a ti mismo como amigo" });
+        }
+         // Verificar si el amigo existe en el sistema
+         const user = await userRepository.getUserByEmail(email);
+         if (!user) {
+             return res.status(404).json({ error: "El usuario no existe en el sistema"});
+         }
+          // Verifica si son amigos
+        const areFriends = await friendRepository.areFriends(mainUserEmail, email);
+        if (!areFriends) {
+            return res.status(400).json({ error: "No eres amigo de este usuario" });
         }
 
         next();

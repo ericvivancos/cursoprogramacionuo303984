@@ -13,9 +13,23 @@ module.exports = {
     
     await friendRepository.addFriend(emailMainUser, emailFriend);
   },
+   /**
+     * Obtiene la lista de amigos de un usuario.
+     * @param {string} userEmail - El correo electrónico del usuario.
+     * @returns {Promise<string[]>} Una lista de correos electrónicos de amigos.
+     */
   getFriends: async (userEmail) => {
     console.log(userEmail);
     const friends = await friendRepository.getFriends(userEmail);
     return friends;
-}
+  },
+  /**
+     * Elimina un amigo de la lista de amigos del usuario.
+     * @param {string} mainUserEmail - El correo electrónico del usuario principal.
+     * @param {string} friendEmail - El correo electrónico del amigo a eliminar.
+     * @returns {Promise<void>}
+     */
+  removeFriend: async (mainUserEmail, friendEmail) => {
+    await friendRepository.removeFriend(mainUserEmail, friendEmail);
+  }
 };

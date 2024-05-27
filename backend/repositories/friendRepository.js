@@ -27,5 +27,14 @@ module.exports = {
     getFriends: async (userEmail) => {
         const result = await query('SELECT emailFriend FROM friends WHERE emailMainUser = ?', [userEmail]);
         return result.map(row => row.emailFriend);
+    },
+    /**
+     * Elimina un amigo de la lista de amigos del usuario.
+     * @param {string} emailMainUser - El correo electrónico del usuario principal.
+     * @param {string} emailFriend - El correo electrónico del amigo a eliminar.
+     * @returns {Promise<void>}
+     */
+    removeFriend: async (emailMainUser, emailFriend) => {
+      await query('DELETE FROM friends WHERE emailMainUser = ? AND emailFriend = ?', [emailMainUser, emailFriend]);
     }
   };

@@ -35,5 +35,24 @@ module.exports = (app) => {
             console.error("Error al obtener la lista de amigos:", error.message);
             res.status(500).json({ error: error.message});
         }
-    })
+    });;
+     /**
+     * Elimina un amigo de la lista de amigos del usuario.
+     * @name DELETE/friends/:email
+     * @param {string} email - El correo electrónico del amigo a eliminar.
+     * @throws {Error} Se lanza un error si ocurre algún problema durante la eliminación del amigo.
+     */
+    router.delete("/:email",authMiddleware.authenticationToken, authMiddleware.authDeleteFriend ,async (req,res) => {
+      const {email} = req.params;
+      const {email: mainUserEmail} = req.user;
+
+      try{
+        await friendService.removeFriend(mainUserEmail,email);
+        res.status(200).json({message: "Amigo eliminado exitosamente"});
+      }
+      catch (error) {
+        console.error("Error al eliminar amigo:", error.message);
+        res.status(500).json({error: error.message});
+      }
+    });
   };
