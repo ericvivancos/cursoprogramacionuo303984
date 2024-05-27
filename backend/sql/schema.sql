@@ -39,3 +39,24 @@ CREATE TABLE active_keys (
     api_key VARCHAR(255) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+-- Insertamos datos de prueba en la tabla de usuarios
+INSERT INTO users (username, email, password) VALUES
+('john_doe', 'john@example.com', '$2b$10$KVUMPqx0IlPmdP9To2NL3Ojd73a4o22J/mzhkhL4QWYPCSjhBJI0y'),
+('jane_doe', 'jane@example.com', '$2b$10$KVUMPqx0IlPmdP9To2NL3Ojd73a4o22J/mzhkhL4QWYPCSjhBJI0y'),
+('alice', 'alice@example.com', '$2b$10$KVUMPqx0IlPmdP9To2NL3Ojd73a4o22J/mzhkhL4QWYPCSjhBJI0y'),
+('bob', 'bob@example.com', '$2b$10$KVUMPqx0IlPmdP9To2NL3Ojd73a4o22J/mzhkhL4QWYPCSjhBJI0y');
+
+-- Insertamos datos de prueba en la tabla de regalos
+INSERT INTO presents (user_id, name, description, url, price, chosen_by) VALUES
+(1, 'Car', 'A toy car', 'http://example.com/car', 10.99, NULL),
+(1, 'Bike', 'A mountain bike', 'http://example.com/bike', 299.99, NULL),
+(2, 'Laptop', 'A powerful laptop', 'http://example.com/laptop', 999.99, NULL),
+(3, 'Watch', 'A luxury watch', 'http://example.com/watch', 199.99, NULL);
+
+-- Insertamos datos de prueba en la tabla de amigos
+INSERT INTO friends (emailMainUser, emailFriend) VALUES
+('john@example.com', 'jane@example.com'),
+('john@example.com', 'alice@example.com'),
+('jane@example.com', 'bob@example.com'),
+('alice@example.com', 'john@example.com');

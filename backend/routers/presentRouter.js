@@ -24,7 +24,23 @@ module.exports = function(app,userService,presentService){
             res.status(500).json({ error: error.message });
         }
     });
+    /**
+     * Lista los regalos de un usuario específico si son amigos.
+     * @name GET/presents
+     * @param {string} userEmail - El correo electrónico del usuario cuyos regalos se quieren listar.
+     * @throws {Error} Se lanza un error si ocurre algún problema durante la obtención de los regalos.
+     */
+    app.get("/presents", authMiddleware.authenticationToken, authMiddleware.verifyFriendhip, async (req, res) => {
+       const { userEmail } = req.query;
 
+       try {
+           const presents = await presentService.getPresentsByUserEmail(userEmail);
+           res.status(200).json(presents);
+       } catch (error) {
+           console.error("Error al obtener los regalos:", error.message);
+           res.status(500).json({ error: error.message });
+       }
+    });
     /**
     * Lista todos los regalos creados por el usuario autenticado.
     * @name GET/presents
@@ -102,4 +118,5 @@ module.exports = function(app,userService,presentService){
             res.status(500).json({ error: error.message});
         }
     });
+    
 }

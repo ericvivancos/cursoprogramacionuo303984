@@ -1,5 +1,6 @@
 const presentRepository = require("../repositories/presentRepository");
 const { validatePresentData } = require("../validators/presentValidator");
+const userRepository = require("../repositories/userRepository");
 const authMiddleware = require('../middlewares/authMiddleware');
 module.exports = {
     /**
@@ -64,5 +65,17 @@ module.exports = {
       validatePresentData(presentData.name, presentData.description, presentData.url, presentData.price);
 
       await presentRepository.updatePresent(presentId, presentData);
-    }    
+    },
+    /**
+     * Obtiene los regalos de un usuario por su email.
+     * @param {string} email - El email del usuario.
+     * @returns {Promise<Object[]>} Una lista de regalos.
+     */
+    getPresentsByUserEmail: async (email) => {
+      const user = await userRepository.getUserByEmail(email);
+      if (!user) {
+          throw new Error("Usuario no encontrado");
+      }
+      return await presentRepository.getPresentsByUserId(user.id);
+  }    
 }

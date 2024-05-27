@@ -3,6 +3,7 @@ const {query} = require("../database");
 const presentRepository = require('../repositories/presentRepository');
 const friendRepository = require("../repositories/friendRepository");
 const userRepository = require("../repositories/userRepository");
+const friendService = require('../services/friendService');
 const secret = process.env.JWT_SECRET;
 
 // Middleware para autenticación de tokens
@@ -73,6 +74,21 @@ module.exports = {
         const areFriends = await friendRepository.areFriends(mainUserEmail, email);
         if (!areFriends) {
             return res.status(400).json({ error: "No eres amigo de este usuario" });
+        }
+
+        next();
+    },
+    verifyFriendhip: async (req,res, next) => {
+        const userEmail = req.user.email;
+        const friendEmail = req.query.userEmail;
+        console.log(friendEmail);
+        if (!friendEmail) {
+            return res.status(400).json({ error: "El parámetro 'userEmail' es requerido" });
+        }
+
+        const areFriends = await friendRepository.areFriends(friendEmail, userEmail);
+        if (!areFriends) {
+            return res.status(403).json({ error: "No tiene permiso para ver los regalos de este usuario" });
         }
 
         next();

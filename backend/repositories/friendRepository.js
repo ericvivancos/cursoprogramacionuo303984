@@ -24,6 +24,11 @@ module.exports = {
         const result = await query('SELECT * FROM friends WHERE emailMainUser = ? AND emailFriend = ?', [userEmail, friendEmail]);
         return result.length > 0;
     },
+    /**
+     * Obtiene la lista de amigos de un usuario.
+     * @param {string} userEmail - El correo electrónico del usuario.
+     * @returns {Promise<string[]>} Una lista de correos electrónicos de amigos.
+     */
     getFriends: async (userEmail) => {
         const result = await query('SELECT emailFriend FROM friends WHERE emailMainUser = ?', [userEmail]);
         return result.map(row => row.emailFriend);
