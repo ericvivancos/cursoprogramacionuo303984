@@ -23,5 +23,9 @@ module.exports = {
     areFriends: async (userEmail, friendEmail) => {
         const result = await query('SELECT * FROM friends WHERE emailMainUser = ? AND emailFriend = ?', [userEmail, friendEmail]);
         return result.length > 0;
+    },
+    getFriends: async (userEmail) => {
+        const result = await query('SELECT emailFriend FROM friends WHERE emailMainUser = ?', [userEmail]);
+        return result.map(row => row.emailFriend);
     }
   };

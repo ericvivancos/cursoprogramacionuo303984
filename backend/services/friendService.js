@@ -1,6 +1,6 @@
-const friendRepository = require("../repositories/friendRepository");
-const userRepository = require("../repositories/userRepository");
 
+
+const friendRepository = require("../repositories/friendRepository");
 module.exports = {
   /**
    * Agrega un amigo a la lista de amigos del usuario.
@@ -10,11 +10,12 @@ module.exports = {
    * @throws {Error} Si el amigo no existe en el sistema.
    */
   addFriend: async (emailMainUser, emailFriend) => {
-    // Verificar si el amigo existe en el sistema
-    const friend = await userRepository.getUserByEmail(emailFriend);
-    if (!friend) {
-      throw new Error("El amigo no existe en el sistema");
-    }
+    
     await friendRepository.addFriend(emailMainUser, emailFriend);
-  }
+  },
+  getFriends: async (userEmail) => {
+    console.log(userEmail);
+    const friends = await friendRepository.getFriends(userEmail);
+    return friends;
+}
 };

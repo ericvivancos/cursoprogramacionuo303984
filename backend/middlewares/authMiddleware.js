@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const {query} = require("../database");
 const presentRepository = require('../repositories/presentRepository');
 const friendRepository = require("../repositories/friendRepository");
+const userRepository = require("../repositories/userRepository");
 const secret = process.env.JWT_SECRET;
 
 // Middleware para autenticación de tokens
@@ -41,7 +42,11 @@ module.exports = {
         if (email === mainUserEmail) {
             return res.status(400).json({ error: "No puedes agregarte a ti mismo como amigo" });
         }
-        
+        // Verificar si el amigo existe en el sistema
+        const friend = await userRepository.getUserByEmail(email);
+        if (!friend) {
+            return res.status(404).json({ error: "El usuario no existe en el sistema"});
+        }
         // Verifica si ya son amigos
         const areFriends = await friendRepository.areFriends(mainUserEmail, email);
         if (areFriends) {

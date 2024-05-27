@@ -26,4 +26,14 @@ module.exports = (app) => {
         res.status(500).json({ error: error.message });
       }
     });
+    router.get("/", authMiddleware.authenticationToken, async (req, res) => {
+        try{
+            const userEmail = req.user.email;
+            const friends = await friendService.getFriends(userEmail);
+            res.status(200).json(friends);
+        } catch(error) {
+            console.error("Error al obtener la lista de amigos:", error.message);
+            res.status(500).json({ error: error.message});
+        }
+    })
   };
