@@ -4,9 +4,6 @@ const router = express.Router();
 const friendService = require("../services/friendService");
 const authMiddleware = require('../middlewares/authMiddleware');
 
-module.exports = (app) => {
-    app.use('/friends', router);
-  
     /**
      * Agrega un amigo a la lista de amigos del usuario.
      * @name POST/friends
@@ -15,10 +12,11 @@ module.exports = (app) => {
      * @returns {Object} Un mensaje indicando si la adición fue exitosa.
      * @throws {Error} Se lanza un error si el amigo no existe en el sistema.
      */
-    router.post("/", authMiddleware.authenticationToken,authMiddleware.authFriends, async (req, res) => {
-      const { email } = req.body;
-  
+    router.post("/", authMiddleware.authenticationToken, async (req, res) => {
+      const { email } = req.body; 
       try {
+        await authMiddleware.verifyUserExists(email);
+        await authMiddleware.verifyNotFriends(req.user.email,email);
         await friendService.addFriend(req.user.email, email);
         res.status(201).json({ message: "Amigo agregado exitosamente" });
       } catch (error) {
@@ -42,10 +40,10 @@ module.exports = (app) => {
      * @param {string} email - El correo electrónico del amigo a eliminar.
      * @throws {Error} Se lanza un error si ocurre algún problema durante la eliminación del amigo.
      */
-    router.delete("/:email",authMiddleware.authenticationToken, authMiddleware.authDeleteFriend ,async (req,res) => {
+    router.delete("/:email",authMiddleware.authenticationToken,authMiddleware.verifyUserExists ,async (req,res) => {
       const {email} = req.params;
       const {email: mainUserEmail} = req.user;
-
+      authMiddleware.verifyFriendship(req.user,req.params)
       try{
         await friendService.removeFriend(mainUserEmail,email);
         res.status(200).json({message: "Amigo eliminado exitosamente"});
@@ -55,4 +53,4 @@ module.exports = (app) => {
         res.status(500).json({error: error.message});
       }
     });
-  };
+module.exports = router;

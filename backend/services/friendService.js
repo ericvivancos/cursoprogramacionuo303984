@@ -19,7 +19,6 @@ module.exports = {
      * @returns {Promise<string[]>} Una lista de correos electrónicos de amigos.
      */
   getFriends: async (userEmail) => {
-    console.log(userEmail);
     const friends = await friendRepository.getFriends(userEmail);
     return friends;
   },

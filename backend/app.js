@@ -5,18 +5,15 @@ const app = express()
 
 app.use(express.json());
 
-
-// Servicios
-const userService = require("./services/userService");
-const presentService = require("./services/presentService");
-
 // Rutas
-require("./routers/userRouter")(app,userService);
-require("./routers/presentRouter")(app,userService,presentService);
+const userRouter = require("./routers/userRouter");
+const presentRouter = require("./routers/presentRouter");
 const friendRouter = require("./routers/friendRouter");
 
 // Agregamos enrutadores
-friendRouter(app);
+app.use("/users",userRouter);
+app.use("/presents", presentRouter);
+app.use("/friends", friendRouter);
 
 const startServer = async () => {
     try {

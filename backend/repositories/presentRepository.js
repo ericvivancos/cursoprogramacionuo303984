@@ -30,7 +30,7 @@ module.exports = {
     * @returns {Promise<object|null>} El regalo encontrado o null si no se encuentra ninguno.
     */
     getPresentById: async (id) => {
-      const result = await query('SELECT * FROM presents WHERE id = ?', [id]);
+      const result = await query('SELECT p.*, u.email AS user_email FROM presents p JOIN users u ON p.user_id = u.id WHERE p.id = ?', [id]);
       return result[0]; // Suponiendo que el ID es único y solo hay un regalo con ese ID
     },
     /**
@@ -57,5 +57,12 @@ module.exports = {
         'UPDATE presents SET name = ?, description = ?, url = ?, price = ? WHERE id = ?',
         [name, description, url, price, id]
       );
-    }
+    },
+    getUserEmailByPresentId: async (presentId) => {
+      const result = await query('SELECT u.email FROM presents p JOIN users u ON p.user_id = u.id WHERE p.id = ?', [presentId]);
+      return result[0]?.email;
+  },
+  setChosenBy: async (presentId, friendEmail) => {
+    await query('UPDATE presents SET chosen_by = ? WHERE id = ?', [friendEmail, presentId]);
+}
 }

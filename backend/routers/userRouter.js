@@ -2,8 +2,12 @@
  * Maneja las solicitudes relacionadas con los usuarios.
  * @module UserRouter
  */
+const express = require('express');
+const router = express.Router();
+const userService = require("../services/userService");
 const authMiddleware = require('../middlewares/authMiddleware');
-module.exports = function(app,userService){
+
+
      /**
    * Crea un nuevo usuario.
    * @name POST/users
@@ -12,7 +16,7 @@ module.exports = function(app,userService){
    * @param {string} password - La contraseña del usuario.
    * @throws {Error} Se lanza un error si ocurre algún problema durante la creación del usuario.
    */
-    app.post("/users", async (req,res) => {
+    router.post("/", async (req,res) => {
         const { email, name, password } = req.body;
         try{
             await userService.createUser(email,name,password);
@@ -30,7 +34,7 @@ module.exports = function(app,userService){
      * @param {string} password - La contraseña del usuario.
      * @throws {Error} Se lanza un error si las credenciales son incorrectas.
      */
-    app.post("/users/login", async (req,res) => {
+    router.post("/login", async (req,res) => {
         const {email,password} = req.body;
         try {
             const token = await userService.loginUser(email,password);
@@ -46,7 +50,7 @@ module.exports = function(app,userService){
      * @name POST/users/disconnect
      * @throws {Error} Se lanza un error si ocurre algún problema al cerrar la sesión.
      */
-    app.post("/users/disconnect",authMiddleware.authenticationToken, async (req,res) => {
+    router.post("/disconnect",authMiddleware.authenticationToken, async (req,res) => {
         try{
             const apiKey = req.header('Authorization')?.split(' ')[1];
             await userService.disconnectUser(apiKey);
@@ -55,5 +59,5 @@ module.exports = function(app,userService){
             console.error('Error al cerrar sesión:', error.message);
             res.status(500).json({ error: error.message });
         }
-    })
-};
+    });
+module.exports = router;

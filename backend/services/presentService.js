@@ -34,7 +34,7 @@ module.exports = {
     * @returns {Object} El regalo encontrado.
     * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
     */
-    getPresentById:  async (userId, presentId) => {
+    getPresentById:  async (presentId) => {
       const present = await presentRepository.getPresentById(presentId);
       return present;
     },
@@ -77,5 +77,8 @@ module.exports = {
           throw new Error("Usuario no encontrado");
       }
       return await presentRepository.getPresentsByUserId(user.id);
+  },
+  updatePresentForFriend: async (presentId, friendEmail) => {
+       return await presentRepository.setChosenBy(presentId, friendEmail);
   }    
 }

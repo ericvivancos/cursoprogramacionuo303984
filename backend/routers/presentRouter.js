@@ -2,8 +2,10 @@
  * Maneja las solicitudes relacionadas con los usuarios.
  * @module presenRouter
  */
+const express = require('express');
+const router = express.Router();
+const presentService = require('../services/presentService');
 const authMiddleware = require('../middlewares/authMiddleware');
-module.exports = function(app,userService,presentService){
      /**
      * Crea un nuevo regalo.
      * @name POST/presents
@@ -14,10 +16,10 @@ module.exports = function(app,userService,presentService){
      * @param {number} price - El precio del regalo.
      * @throws {Error} Se lanza un error si ocurre algún problema durante la creación del regalo.
      */
-    app.post("/presents",authMiddleware.authenticationToken, async(req,res) => {
+    router.post("/",authMiddleware.authenticationToken, async(req,res) => {
         const {name,description,url,price} = req.body;
         try{
-            const present = await presentService.createPresent(req.user.id,name,description,url,price);
+            await presentService.createPresent(req.user.id,name,description,url,price);
             res.status(201).json({ message: "Regalo creado exitosamente", present });
         } catch (error) {
             console.error("Error al crear regalo:", error.message);
@@ -30,33 +32,38 @@ module.exports = function(app,userService,presentService){
      * @param {string} userEmail - El correo electrónico del usuario cuyos regalos se quieren listar.
      * @throws {Error} Se lanza un error si ocurre algún problema durante la obtención de los regalos.
      */
-    app.get("/presents", authMiddleware.authenticationToken, authMiddleware.verifyFriendhip, async (req, res) => {
-       const { userEmail } = req.query;
-
-       try {
-           const presents = await presentService.getPresentsByUserEmail(userEmail);
-           res.status(200).json(presents);
-       } catch (error) {
-           console.error("Error al obtener los regalos:", error.message);
-           res.status(500).json({ error: error.message });
-       }
-    });
     /**
-    * Lista todos los regalos creados por el usuario autenticado.
-    * @name GET/presents
-    * @param {string} apiKey - La apiKey del usuario.
-    * @returns {Array} Una lista de regalos creados por el usuario.
-    * @throws {Error} Se lanza un error si ocurre algún problema al obtener los regalos.
-    */
-   app.get("/presents",authMiddleware.authenticationToken,async(req,res) => {
-        try{
-            const presents = await presentService.getPresentsByUserId(req.user.id);
-            res.status(200).json(presents);
-        } catch (error) {
-            console.error("Error al obtener regalos:", error.message);
-            res.status(500).json({ error: error.message });
+     * Lista los regalos de un usuario específico si son amigos.
+     * @name GET/presents
+     * @param {string} userEmail - El correo electrónico del usuario cuyos regalos se quieren listar.
+     * @throws {Error} Se lanza un error si ocurre algún problema durante la obtención de los regalos.
+     */
+    router.get("/", authMiddleware.authenticationToken, async (req, res) => {
+        const { userEmail } = req.query;
+
+        if (userEmail) {
+            // Listar los regalos de un usuario específico si son amigos
+            try {
+                await authMiddleware.verifyUserExists(userEmail);
+                await authMiddleware.verifyFriendship(req.user.email, userEmail);               
+                await presentService.getPresentsByUserEmail(userEmail);
+                res.status(200).json(presents);
+            } catch (error) {
+                console.error("Error al obtener los regalos:", error.message);
+                res.status(500).json({ error: error.message });
+            }
+        } else {
+            // Listar todos los regalos creados por el usuario autenticado
+            try {
+                const presents = await presentService.getPresentsByUserId(req.user.id);
+                res.status(200).json(presents);
+            } catch (error) {
+                console.error("Error al obtener regalos:", error.message);
+                res.status(500).json({ error: error.message });
+            }
         }
-   });
+    });
+
     /**
     * Obtiene un regalo por su ID.
     * @name GET/presents/:id
@@ -65,10 +72,12 @@ module.exports = function(app,userService,presentService){
     * @returns {Object} El regalo encontrado.
     * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
     */
-    app.get("/presents/:id", authMiddleware.authenticationToken,authMiddleware.verifyPresentOwner, async(req,res) => {
+    router.get("/:id", authMiddleware.authenticationToken, async(req,res) => {
         const presentId = parseInt(req.params.id, 10);
         try{
+            await authMiddleware.verifyPresentOwner(req.user.id,presentId);
             const present = await presentService.getPresentById(req.user.id, presentId);
+            
             res.status(200).json(present);
         } catch (error) {
             console.error("Error al obtener el regalo:", error.message);
@@ -83,9 +92,10 @@ module.exports = function(app,userService,presentService){
     * @returns {Object} Un mensaje indicando si la eliminación fue exitosa.
     * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
     */
-    app.delete("/presents/:id", authMiddleware.authenticationToken, authMiddleware.verifyPresentOwner, async(req,res) => {
+    router.delete("/:id", authMiddleware.authenticationToken, async(req,res) => {
         const presentId = parseInt(req.params.id,10);
         try{
+            await authMiddleware.verifyPresentOwner(req.user.id,presentId);
             await presentService.deletePresent(presentId);
             res.status(200).json({ message: "Regalo eliminado exitosamente"});
         } catch(error) {
@@ -106,17 +116,28 @@ module.exports = function(app,userService,presentService){
     * @returns {Object} Un mensaje indicando si la modificación fue exitosa.
     * @throws {Error} Se lanza un error si el regalo no pertenece al usuario o si no se encuentra.
     */
-    app.put("/presents/:id", authMiddleware.authenticationToken, authMiddleware.verifyPresentOwner, async (req,res) => {
+    router.put("/:id", authMiddleware.authenticationToken, async (req,res) => {
         const presentId = parseInt(req.params.id,10);
         const presentData = req.body;
-
         try{
-            await presentService.updatePresent(req.user.id, presentId, presentData);
-            res.status(200).json({ message: "Regalo modificado exitosamente"});
+            const present = await presentService.getPresentById(presentId);
+           console.log(present);
+            //Actualización por el dueño del regalo
+            if(Object.keys(presentData).length > 0){
+                await authMiddleware.verifyPresentOwner(req.user.id,presentId);
+                await presentService.updatePresent(req.user.id, presentId, presentData);
+                res.status(200).json({ message: "Regalo modificado exitosamente"});
+            }
+            else {
+                await authMiddleware.verifyFriendship(req.user.email,present.user_email);
+                await authMiddleware.verifyNotChosen(present, req.user.email);
+                await presentService.updatePresentForFriend(presentId, req.user.email);
+                res.status(200).json({ message: "Regalo elegido exitosamente" });
+            }
         } catch (error) {
             console.error("Error al modificar regalo:", error.message);
             res.status(500).json({ error: error.message});
         }
     });
     
-}
+module.exports = router;
