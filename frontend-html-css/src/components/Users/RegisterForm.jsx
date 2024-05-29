@@ -39,41 +39,54 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="register-form">
-      <h2>Crear una cuenta</h2>
+    <div>
+      
       {error && <p className="error">{error}</p>}
       {message && <p className="message">{message}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Nombre</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password</label>
+      <h2>Crear una cuenta</h2>
+          <div className="group">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <span className="highlight"></span>
+            <span className="bar"></span>
+            <label >Email</label>
+          </div>
+          
+          <div className="group">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <span className="highlight"></span>
+            <span className="bar"></span>
+            <label>Nombre</label>
+          </div>
+          
+          <div className="group">
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </div>
+          <span className="highlight"></span>
+          <span className="bar"></span>
+          <label>Password</label>
+          </div>
+          
+          
+
         <button type="submit">Registrarse</button>
       </form>
     </div>
+    
   );
 };
 

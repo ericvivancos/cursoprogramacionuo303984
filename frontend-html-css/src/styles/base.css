@@ -5,10 +5,37 @@ html {
   padding: 0;
   font-family: 'Roboto', sans-serif;
 }
-  
+@keyframes move {
+  100% {
+      transform: translate3d(0, 0, 1px) rotate(360deg);
+  }
+}
+@keyframes move {
+    100% {
+        transform: translate3d(0, 0, 1px) rotate(360deg);
+    }
+}
+
+.background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: #262523;
+    overflow: hidden;
+}
+
+
+
+
+
+
   h1, h2, h3, h4, h5, h6 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    color: var(--primary-color);
   }
   
   p {
@@ -31,3 +58,160 @@ html {
   i {
     margin-right: 10px;
   }
+  form{
+    max-width: 600px;
+    margin: 50px auto;
+    padding:  20px;
+    background: var(--secondary-color);
+    border-radius: 12px;
+    box-shadow: 0px 0px 30px -7px rgba(192,217,195,0.4);
+    /*Añadesombras*/text-align: center;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
+  .group 			  { 
+    position:relative; 
+    margin-bottom:55px; 
+  }
+  input 				{
+    font-size:18px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:95%;
+    border:none;
+    background-color: var(--secondary-color);
+    border-bottom:1px solid #757575;
+    color: var(--primary-color);
+  }
+  input:focus 		{ outline:none; }
+  /* Estilos específicos para los inputs autorrellenados */
+form input:-webkit-autofill,
+form textarea:-webkit-autofill {
+  background-color: var(--secondary-color);
+}
+
+form input:-moz-autofill,
+form textarea:-moz-autofill {
+  background-color: var(--secondary-color);
+}
+
+form input:-ms-autofill,
+form textarea:-ms-autofill {
+  background-color: var(--secondary-color);
+}
+
+form input:-o-autofill,
+form textarea:-o-autofill {
+  background-color: var(--secondary-color);
+}
+
+  
+  label 				 {
+    color: var(--primary-color);
+    font-size:18px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:5px;
+    top:10px;
+    transition:0.2s ease all;
+    -moz-transition:0.2s ease all;
+    -webkit-transition:0.2s ease all;
+    -ms-transition:0.2s ease all;
+    -o-transition:0.2s ease all;
+}
+  
+  /* active state */
+  input:focus ~ label, input:valid ~ label 		{
+    top:-20px;
+    font-size:14px;
+    color:var(--primary-color);
+    background-color: var(--secondary-color);
+  }
+  .bar 	{ position:relative; display:block; width:300px; }
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:1px; 
+  position:absolute;
+  background:var(--primary-color); 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+	from { background:var(--primary-color); }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:var(--primary-color); }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:var(--primary-color); }
+  to 	{ width:0; background:transparent; }
+}
+select {
+  padding: 6px;
+  height: 32px;
+  border-radius: 2px;
+}
+button {
+  padding: 19px 39px 18px 39px;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  font-size: 18px;
+  text-align: center;
+  font-style: normal;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid var(--primary-color);
+  border-width: 1px 1px 3px;
+  box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+button:hover{
+  background-color: var(--primary-color-hover);
+}
+
+
+@media screen and (min-width: 480px) {
+
+  form {
+    max-width: 480px;
+  }
+
+}

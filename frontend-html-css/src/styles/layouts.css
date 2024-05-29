@@ -30,14 +30,9 @@
 }
 
 .navbar-logo img {
-  height: 70px;
+  height: 80px;
   margin-right: 20px;
-  border: 5px solid var(--primary-color);
-  border-radius: 50%;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
+
 }
 
 .navbar-list {
