@@ -21,3 +21,52 @@
     padding-right: 15px;
     padding-left: 15px;
   }
+  .navbar {
+  background-color: var(--secondary-color);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Alinea verticalmente el logo y los enlaces */
+}
+
+.navbar-logo img {
+  height: 70px;
+  margin-right: 20px;
+  border: 5px solid var(--primary-color);
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.navbar-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.navbar-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.navbar-link:hover {
+  color: var(--primary-color-hover);
+}
+footer {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
