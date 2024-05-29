@@ -1,8 +1,9 @@
 import { API_ROUTE } from "../config";
 
 export const query = async(method, endpoint, content = {}, token) => {
-    const url = `${apiRoute}/${endpoint}`;
+    const url = `${API_ROUTE}/${endpoint}`;
     const params = {
+        method,
         headers: {
             'Content-Type': 'application/json',
             Authorization: token ? `Bearer ${token}` : ''
@@ -12,9 +13,13 @@ export const query = async(method, endpoint, content = {}, token) => {
 
     try{
         const response = await fetch(url, params);
-        if(!response.ok) throw new Error(response.statusText);
-        return response.json();
+        const responseData = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.error || response.statusText);
+        }
+    
+        return { data: responseData, error: null };
     } catch(error) {
-        throw new Error(error.message);
+        return { data: null, error: error.message };
     }
 }

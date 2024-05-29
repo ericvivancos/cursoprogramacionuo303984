@@ -2,8 +2,15 @@ const express = require("express");
 const {testConnection} = require("./database");
 const port = process.env.PORT;
 const app = express()
+const cors = require("cors")
 
 app.use(express.json());
+// Middleware de Cors
+app.use(cors({
+	origin: "*",
+	methods: ["GET", "POST", "PUT", "DELETE"],
+	allowedHeaders: ["Content-Type", "Authorization"]
+}))
 
 // Rutas
 const userRouter = require("./routers/userRouter");

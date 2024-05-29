@@ -24,7 +24,7 @@ services:
       - /app/node_modules
     depends_on:
       - backend
-    command: npm start
+    command: ["nodemon", "--config", "nodemon.json"]
 
   frontend-ant-design:
     build:
