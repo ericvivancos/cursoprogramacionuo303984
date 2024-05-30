@@ -1,8 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React , {useContext} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from "../logo.png"
+import { AuthContext } from '../context/AuthContext';
 
 const Menu = () => {
+  const { isAuthenticated, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
   return (
     <nav className="navbar">
       <div className="navbar-logo">
@@ -10,7 +18,20 @@ const Menu = () => {
         
       </div>
       <ul className="navbar-list">
-        <li className="navbar-item">
+      {isAuthenticated ? (
+          <>
+            <li className="navbar-item">
+              <Link className='navbar-link' to="/profile">
+               Perfil
+              </Link>
+            </li>
+            <li className="navbar-item">
+              <Link className='navbar-link' onClick={handleLogout}>Cerrar Sesión</Link>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="navbar-item">
           <Link to="/signup" className="navbar-link">
             Registrate
           </Link>
@@ -20,6 +41,9 @@ const Menu = () => {
              Inicia Sesión
           </Link>
         </li>
+          </>
+        )}
+       
         {/* Add more links as needed */}
       </ul>
     </nav>

@@ -31,7 +31,6 @@ const RegisterForm = () => {
       else{
         throw new Error(responseData.error);
       }
-      console.log(responseData.error);
       
     } catch (err) {
         setError(err.message); // Mostrar el mensaje de error de la API en caso de fallo    
@@ -45,7 +44,7 @@ const RegisterForm = () => {
       {message && <p className="message">{message}</p>}
       <form onSubmit={handleSubmit}>
       <h2>Crear una cuenta</h2>
-          <div className="group">
+          <div className="form-group">
             <input
               type="email"
               value={email}
@@ -57,7 +56,7 @@ const RegisterForm = () => {
             <label >Email</label>
           </div>
           
-          <div className="group">
+          <div className="form-group">
             <input
               type="text"
               value={name}
@@ -69,7 +68,7 @@ const RegisterForm = () => {
             <label>Nombre</label>
           </div>
           
-          <div className="group">
+          <div className="form-group">
           <input
             type="password"
             value={password}
