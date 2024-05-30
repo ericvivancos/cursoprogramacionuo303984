@@ -64,4 +64,15 @@ footer {
   bottom: 0;
   width: 100%;
 }
+.notification {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+}
+.notification.hidden {
+  opacity: 0;
+}
 

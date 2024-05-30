@@ -25,9 +25,10 @@ export const AuthProvider = ({ children }) => {
         try {
           const response = await query('POST', 'users/disconnect', {}, token);
           if(response.data.message){
+            setLogoutMessage(response.data.message)
             removeToken();
             setIsAuthenticated(false);
-            setLogoutMessage(response.data.message);
+            
           }
         } catch (error) {
           console.error('Error al cerrar sesión:', error.message);
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout,logoutMessage }}>
       {children}
     </AuthContext.Provider>
   );
