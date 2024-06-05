@@ -21,8 +21,8 @@ const Menu = () => {
       {isAuthenticated ? (
           <>
             <li className="navbar-item">
-              <Link className='navbar-link' to="/profile">
-               Perfil
+              <Link className='navbar-link' to="/present/create">
+               Añadir regalo
               </Link>
             </li>
             <li className="navbar-item">

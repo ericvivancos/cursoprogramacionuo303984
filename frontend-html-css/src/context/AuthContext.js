@@ -27,17 +27,18 @@ export const AuthProvider = ({ children }) => {
           if(response.data.message){
             setLogoutMessage(response.data.message)
             removeToken();
-            setIsAuthenticated(false);
-            
+            setIsAuthenticated(false);           
           }
         } catch (error) {
           console.error('Error al cerrar sesión:', error.message);
         }
       }
   };
-
+  const clearLogoutMessage = () => {
+    setLogoutMessage('');
+  }
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout,logoutMessage }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout,logoutMessage, clearLogoutMessage }}>
       {children}
     </AuthContext.Provider>
   );

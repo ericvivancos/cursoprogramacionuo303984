@@ -12,12 +12,13 @@ export const query = async(method, endpoint, content = {}, token) => {
     };
 
     try{
+        console.log(params);
         const response = await fetch(url, params);
         const responseData = await response.json();
         if (!response.ok) {
           throw new Error(responseData.error || response.statusText);
-        }
-    
+        }  
+
         return { data: responseData, error: null };
     } catch(error) {
         return { data: null, error: error.message };

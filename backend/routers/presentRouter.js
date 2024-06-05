@@ -20,7 +20,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
         const {name,description,url,price} = req.body;
         try{
             await presentService.createPresent(req.user.id,name,description,url,price);
-            res.status(201).json({ message: "Regalo creado exitosamente", present });
+            res.status(201).json({ message: "Regalo creado exitosamente" });
         } catch (error) {
             console.error("Error al crear regalo:", error.message);
             res.status(500).json({ error: error.message });
