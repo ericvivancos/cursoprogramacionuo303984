@@ -1,10 +1,7 @@
 .container {
     width: 100%;
-    max-width: var(--container-max-width);
     margin-right: auto;
     margin-left: auto;
-    padding-right: 15px;
-    padding-left: 15px;
   }
   
   .row {
@@ -74,5 +71,14 @@ footer {
 }
 .notification.hidden {
   opacity: 0;
+}
+.myshadow {
+  border-radius: 12px;
+    box-shadow: 0px 0px 30px -7px rgba(192,217,195,0.4);
+    /*Añadesombras*/text-align: center;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
 }
 

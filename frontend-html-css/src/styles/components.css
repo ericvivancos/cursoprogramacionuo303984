@@ -52,11 +52,26 @@
   .card-content {
     margin-bottom: 10px;
   }
+  .absolute {
+    position: absolute;
+  }
+  .relative {
+    position: relative;
+  }
   .fixed {
     position: fixed;
   }
   .flex {
    display: flex;
+  }
+  .flex-col {
+    flex-direction: column;
+  }
+  .grid {
+    display: grid;
+  }
+  .grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
   }
   .top-4 {
     top: 1rem;
@@ -64,11 +79,43 @@
   .left-1\/2 {
     left: 50%;
   }
+  .items-center {
+    align-items: center;
+  }
   .items-start {
     align-items: flex-start;
   }
+  .ml-auto {
+    margin-left: auto;
+  }
   .p-4 {
     padding: 1rem;
+  }
+  .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .gap-1 {
+    gap: 0.25rem;
+  }
+  .gap-2 {
+    gap: 0.5rem;
+  }
+  .gap-2\.5 {
+    gap: 0.625rem;
+  }
+  .gap-4 {
+    gap: 1rem;;
+  }
+  .gap-6 {
+    gap: 1.5rem;
+  }
+  .gap-8 {
+    gap: 2rem;
   }
   .justify-between{
     justify-content: space-between;
@@ -104,16 +151,28 @@
   .bg-primary{
     background-color: var(--primary-color);
   }
+  .bg-danger{
+    background-color: var(--danger-color);
+  }
   .shadow-lg{
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
+
   .font-medium{ font-weight: 500;}
+  .font-semibold { font-weight: 600;}
 
   .text-lg{font-size: 1.125rem; line-height: 1.75rem;}
   .text-sm{font-size: 0.875rem; line-height: 1.25rem;}
   
+  .text-left{
+    text-align: left;
+  }
+
+  .leading-none {
+    line-height: 1;
+  }
 
   .color-secondary{color: var(--secondary-color);}
   .color-secondary-light{color: var(--secondary-color/0.8);}
@@ -137,4 +196,11 @@
   .space-y-56 { margin-top: -14rem; }
   .space-y-64 { margin-top: -16rem; }
   .space-y-px { margin-top: -1px; }
+
+  .z-10 {
+    z-index: 10;
+  }
+  .inset-0{
+    inset: 0px;
+  }
   

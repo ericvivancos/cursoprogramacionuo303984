@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/HomePge";
 import PresentsPage from "./pages/Presents"
+import PresentList from "./pages/PresentsList";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AuthProvider } from './context/AuthContext';
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>}/>
                 <Route path="/present/create" element={<PrivateRoute><PresentsPage/></PrivateRoute>}/>
+                <Route path="/presents" element={<PrivateRoute><PresentList/></PrivateRoute>}/>
               </Routes>
             </main>
             <Footer />

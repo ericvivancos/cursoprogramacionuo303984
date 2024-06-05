@@ -20,6 +20,11 @@ const Menu = () => {
       <ul className="navbar-list">
       {isAuthenticated ? (
           <>
+          <li className="navbar-item">
+              <Link className='navbar-link' to="/presents">
+               Mis Regalos
+              </Link>
+            </li>
             <li className="navbar-item">
               <Link className='navbar-link' to="/present/create">
                Añadir regalo
