@@ -9,6 +9,7 @@ import PresentList from "./pages/PresentsList";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AuthProvider } from './context/AuthContext';
+import EditPresentForm from "./components/Presents/EditPresentForm";
 function App() {
   return (
     <AuthProvider>
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>}/>
                 <Route path="/present/create" element={<PrivateRoute><PresentsPage/></PrivateRoute>}/>
                 <Route path="/presents" element={<PrivateRoute><PresentList/></PrivateRoute>}/>
+                <Route path="/presents/edit/:id" element={<PrivateRoute><EditPresentForm /></PrivateRoute>} />
               </Routes>
             </main>
             <Footer />

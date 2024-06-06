@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 import { query } from '../../utils/apiUtils';
 import Notification from '../Notification';
 
@@ -6,6 +7,7 @@ const PresentList = () => {
   const [presents, setPresents] = useState([]);
   const [error, setError] = useState(null);
   const [notification, setNotification] = useState({ type: '', message: '' });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPresents = async () => {
@@ -30,10 +32,15 @@ const PresentList = () => {
       setNotification({ type: 'error', message: err.message });
     }
   };
-
+  const handleEdit = (id) => {
+    navigate(`/presents/edit/${id}`);
+  };
+  const clearNotification = () => {
+    setNotification({ type: '', message: '' });
+  };
   return (
     <div>
-      {notification.message && <Notification type={notification.type} message={notification.message} />}
+      {notification.message && <Notification type={notification.type} message={notification.message} onClose={clearNotification} />}
       <h2>Lista de Regalos</h2>
       {error && <p className="error">{error}</p>}
       <section className='w-full'>
@@ -54,7 +61,7 @@ const PresentList = () => {
                 </div>
             </div>
             <div className="px-4 flex gap-2">
-                <button >Editar</button>
+                <button onClick={() => handleEdit(present.id)}>Editar</button>
                 <button onClick={() => handleDelete(present.id)}>Eliminar</button>
             </div>           
           </li>

@@ -1,18 +1,41 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { query } from '../../utils/apiUtils'
 import Notification from '../Notification';
 
-const CreatePresentForm = () => {
+const EditPresentForm = () => {
+    const {id} = useParams();
+    console.log(id);
     const [present, setPresent] = useState({
+        id: '',
+        user_id:'',
         name: '',
         description: '',
         url: 'http://',
         price: ''
     });
-    const navigate = useNavigate();
+
     const [error, setError] = useState(null);
     const [notification, setNotification] = useState({ type: '', message: '' });
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchPresent = async () => {
+          const token = localStorage.getItem('token');
+          try {
+            const response = await query('GET', `presents/${id}`, {}, token);
+            console.log(response);
+            console.log(response.data);
+            setPresent(response.data);
+            console.log(present);
+          } catch (err) {
+            setError(err.message);
+            setNotification({ type: 'error', message: err.message });
+          }
+        };
+        fetchPresent();
+      }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,7 +50,7 @@ const CreatePresentForm = () => {
         const token = localStorage.getItem('token');
         try{
             const presentData = { ...present, price: parseFloat(present.price) };
-            const response = await query('POST','presents',presentData,token);
+            const response = await query('PUT',`presents/${id}`,presentData,token);
             if(response.data && response.data.message){
                 setNotification({ type: 'success', message: response.data.message });
                 setPresent({
@@ -37,12 +60,14 @@ const CreatePresentForm = () => {
                   price: ''
                 });
                 setTimeout(() => {
-                    navigate('/presents');
-                  }, 2000);
+                  navigate('/presents');
+                }, 2000);
             }
-        } catch( err) {
-            setError(err.message);
-            setNotification({ type: 'error', message: err.message });
+            else{
+                setNotification({ type: 'error', message: response.error });
+            }
+        } catch( error) {
+            setNotification({ type: 'error', message: error.message });
         }
     };
     const clearNotification = () => {
@@ -81,11 +106,11 @@ const CreatePresentForm = () => {
                 <label >Precio</label>
             </div>
             <div className="form-group"></div>
-            <button type="submit">Crear Regalo</button>
+            <button type="submit">Modificar Regalo</button>
         </form>
         </div>
         
     );
 };
 
-export default CreatePresentForm;
+export default EditPresentForm;

@@ -74,10 +74,11 @@ const authMiddleware = require('../middlewares/authMiddleware');
     */
     router.get("/:id", authMiddleware.authenticationToken, async(req,res) => {
         const presentId = parseInt(req.params.id, 10);
+        console.log(presentId);
         try{
             await authMiddleware.verifyPresentOwner(req.user.id,presentId);
-            const present = await presentService.getPresentById(req.user.id, presentId);
-            
+            const present = await presentService.getPresentById(presentId);
+            console.log(present);
             res.status(200).json(present);
         } catch (error) {
             console.error("Error al obtener el regalo:", error.message);
