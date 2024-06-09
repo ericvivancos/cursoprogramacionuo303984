@@ -34,14 +34,7 @@
     border-color: #007bff;
     outline: none;
   }
-  .card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
+
   
   .card-title {
     font-size: 1.2rem;
@@ -84,6 +77,24 @@
   }
   .items-start {
     align-items: flex-start;
+  }
+  .m-4 {
+    margin: 1rem;
+  }
+  .m-6 {
+    margin: 1.5rem;
+  }
+  .m-8 {
+    margin: 2rem;
+  }
+  .m-12 {
+    margin: 3rem;
+  }
+  .mt-4 {
+    margin-top: 1rem;
+  }
+  .mt-8 {
+    margin-top: 2rem;
   }
   .ml-auto {
     margin-left: auto;

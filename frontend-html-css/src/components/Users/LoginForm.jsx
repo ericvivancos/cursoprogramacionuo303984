@@ -28,7 +28,7 @@ const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className='myshadow' onSubmit={handleSubmit}>
             <h2>Login</h2>
             {error && <p style={{color: 'red'}}>{error}</p>}
             <div className="form-group">

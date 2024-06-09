@@ -44,7 +44,7 @@ const PresentList = () => {
       <h2>Lista de Regalos</h2>
       {error && <p className="error">{error}</p>}
       <section className='w-full'>
-        <div className="container grid gap-6 px-4">
+        <div className=" grid gap-6 px-4">
             <div className="flex flex-col items-center gap-4">
             <ul className="grid gap-8 grid-cols-4">
         {presents.map((present) => (

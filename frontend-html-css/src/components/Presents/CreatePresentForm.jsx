@@ -53,7 +53,7 @@ const CreatePresentForm = () => {
             {notification.message && (
         <Notification type={notification.type} message={notification.message} onClose={clearNotification} />
       )}
-<form onSubmit={handleSubmit}>
+<form className='myshadow' onSubmit={handleSubmit}>
             <h2>Crear un regalo</h2>
             {error && <div className="error">{error}</div>}
             <div className="form-group">

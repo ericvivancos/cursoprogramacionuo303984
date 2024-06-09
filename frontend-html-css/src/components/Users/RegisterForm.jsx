@@ -42,7 +42,7 @@ const RegisterForm = () => {
       
       {error && <p className="error">{error}</p>}
       {message && <p className="message">{message}</p>}
-      <form onSubmit={handleSubmit}>
+      <form className='myshadow' onSubmit={handleSubmit}>
       <h2>Crear una cuenta</h2>
           <div className="form-group">
             <input

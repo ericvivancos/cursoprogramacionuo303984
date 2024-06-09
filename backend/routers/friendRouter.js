@@ -40,10 +40,13 @@ const authMiddleware = require('../middlewares/authMiddleware');
      * @param {string} email - El correo electrónico del amigo a eliminar.
      * @throws {Error} Se lanza un error si ocurre algún problema durante la eliminación del amigo.
      */
-    router.delete("/:email",authMiddleware.authenticationToken,authMiddleware.verifyUserExists ,async (req,res) => {
+    router.delete("/:email",authMiddleware.authenticationToken ,async (req,res) => {
       const {email} = req.params;
       const {email: mainUserEmail} = req.user;
-      authMiddleware.verifyFriendship(req.user,req.params)
+      console.log(req.params);
+      console.log(req.user);
+      authMiddleware.verifyUserExists(email);
+      authMiddleware.verifyFriendship(req.user,req.params);
       try{
         await friendService.removeFriend(mainUserEmail,email);
         res.status(200).json({message: "Amigo eliminado exitosamente"});

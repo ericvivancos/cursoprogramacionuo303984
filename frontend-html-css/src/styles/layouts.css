@@ -1,5 +1,6 @@
 .container {
     width: 100%;
+    max-width: 400px;
     margin-right: auto;
     margin-left: auto;
   }
@@ -51,6 +52,46 @@
 
 .navbar-link:hover {
   color: var(--primary-color-hover);
+}
+.card {
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.card-header {
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 10px;
+}
+
+.card-description {
+  font-size: 14px;
+  margin: 0;
+}
+
+.card-content {
+  margin-top: 20px;
+}
+.friends-list {
+  margin-top: 20px;
+}
+
+.friend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.friend-item:last-child {
+  border-bottom: none;
 }
 footer {
   background-color: var(--secondary-color);

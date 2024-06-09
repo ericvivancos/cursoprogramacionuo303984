@@ -21,6 +21,11 @@ const Menu = () => {
       {isAuthenticated ? (
           <>
           <li className="navbar-item">
+              <Link className='navbar-link' to="/friends">
+               Amigos
+              </Link>
+            </li>
+          <li className="navbar-item">
               <Link className='navbar-link' to="/presents">
                Mis Regalos
               </Link>

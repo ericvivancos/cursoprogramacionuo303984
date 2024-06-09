@@ -83,6 +83,7 @@ const verifyNotFriends = async (userEmail, friendEmail) => {
  * @param {Function} next - La función next.
  */
 const verifyUserExists = async (email) => {
+  console.log(email);
         const user = await userRepository.getUserByEmail(email);
         if (!user) {
             throw new Error("Usuario no encontrado");
