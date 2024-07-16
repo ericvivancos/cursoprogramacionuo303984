@@ -46,7 +46,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
             try {
                 await authMiddleware.verifyUserExists(userEmail);
                 await authMiddleware.verifyFriendship(req.user.email, userEmail);               
-                await presentService.getPresentsByUserEmail(userEmail);
+                const presents = await presentService.getPresentsByUserEmail(userEmail);
                 res.status(200).json(presents);
             } catch (error) {
                 console.error("Error al obtener los regalos:", error.message);
@@ -122,7 +122,6 @@ const authMiddleware = require('../middlewares/authMiddleware');
         const presentData = req.body;
         try{
             const present = await presentService.getPresentById(presentId);
-           console.log(present);
             //Actualización por el dueño del regalo
             if(Object.keys(presentData).length > 0){
                 await authMiddleware.verifyPresentOwner(req.user.id,presentId);

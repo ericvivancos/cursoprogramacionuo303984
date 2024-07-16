@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import { AuthProvider } from './context/AuthContext';
 import EditPresentForm from "./components/Presents/EditPresentForm";
 import Friends from "./pages/Friends";
+import SearchGifts from './pages/SearchGiftsPage';
 function App() {
   return (
     <AuthProvider>
@@ -27,7 +28,8 @@ function App() {
                 <Route path="/present/create" element={<PrivateRoute><PresentsPage/></PrivateRoute>}/>
                 <Route path="/presents" element={<PrivateRoute><PresentList/></PrivateRoute>}/>
                 <Route path="/presents/edit/:id" element={<PrivateRoute><EditPresentForm /></PrivateRoute>} />
-                <Route path="/friends" element={<PrivateRoute><Friends/></PrivateRoute>} />
+                <Route path="/friends" element={<PrivateRoute><Friends/></PrivateRoute>} />  
+                <Route path="/search-gifts" element={<PrivateRoute><SearchGifts/></PrivateRoute>} /><Route path="/search-gifts" component={SearchGifts} />
               </Routes>
             </main>
             <Footer />

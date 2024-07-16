@@ -36,6 +36,11 @@ const Menu = () => {
               </Link>
             </li>
             <li className="navbar-item">
+              <Link className='navbar-link' to="/search-gifts">
+               Regalar a un amigo
+              </Link>
+            </li>
+            <li className="navbar-item">
               <Link className='navbar-link' onClick={handleLogout}>Cerrar Sesión</Link>
             </li>
           </>
