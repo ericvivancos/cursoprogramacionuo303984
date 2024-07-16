@@ -12,6 +12,7 @@ import { AuthProvider } from './context/AuthContext';
 import EditPresentForm from "./components/Presents/EditPresentForm";
 import Friends from "./pages/Friends";
 import SearchGifts from './pages/SearchGiftsPage';
+import InstructionsList from "./components/InstructionList"
 function App() {
   return (
     <AuthProvider>
@@ -22,6 +23,7 @@ function App() {
             <Navbar />
             <main>
               <Routes>
+                <Route path= "/" element={<InstructionsList />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/home" element={<PrivateRoute><Home/></PrivateRoute>}/>

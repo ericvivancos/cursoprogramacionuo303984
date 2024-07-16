@@ -130,4 +130,130 @@ footer {
   padding: 0;
   list-style-type: none;
 }
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  height: 55vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5em;
+  background-color: #ccc;
+  border-right: 1px solid #bbb;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 2em;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.indicator {
+  width: 15px;
+  height: 15px;
+  margin: 0 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.indicator.active {
+  background-color: white;
+}
+
+.slide1 {
+  background-color: #444;
+  background-image: url("https://images.unsplash.com/photo-1468908627957-7783f0c42edb");
+  
+}
+
+.slide2 {
+  background-image: url("https://images.unsplash.com/photo-1523113501336-6ea4a7d6660d");
+  
+}
+
+.slide3 {
+  background-color: #444;
+  background-image: url("https://images.unsplash.com/photo-1530706344228-b143ddd95043");
+
+}
+
+.slide4 {
+  background-image: url("https://images.unsplash.com/photo-1528615551650-24970eddf481");
+
+}
+
+.slide5 {
+  background-color: #444;
+  background-image: url("https://images.unsplash.com/photo-1699413157949-2a4c56378065");
+
+}
+
+.slide6 {
+  background-image: url("https://images.unsplash.com/photo-1698428059096-e7906118f7c2");
+}
+.instructions-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.instructions-list {
+  list-style-type: decimal;
+  padding-left: 20px;
+}
+
+.instructions-list li {
+  margin-bottom: 20px;
+}
+
+.instructions-list h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.instructions-list p {
+  margin: 5px 0 0 0;
+  font-size: 16px;
+  color: var(--secondary-color);
+}
+.instructions-container h2 {
+  margin: 5px 0 0 0;
+  font-size: 16px;
+  color: var(--secondary-color);
+}
 

@@ -14,7 +14,7 @@ const Menu = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/"><img src={logo} alt="Logo" /></Link>
+        <Link to="/home"><img src={logo} alt="Logo" /></Link>
         
       </div>
       <ul className="navbar-list">
