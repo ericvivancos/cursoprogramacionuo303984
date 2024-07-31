@@ -14,7 +14,6 @@ export const query = async(method, endpoint, content = {}, token) => {
     try{
         const response = await fetch(url, params);
         const responseData = await response.json();
-        console.log(responseData);
         if (!response.ok) {
           throw new Error(responseData.error || response.statusText);
         }  
