@@ -24,7 +24,7 @@ services:
       - /app/node_modules
     depends_on:
       - backend
-    command: ["nodemon", "--config", "nodemon.json"]
+    command: ["npm", "start"]
 
   frontend-ant-design:
     build:
@@ -36,6 +36,7 @@ services:
       - /app/node_modules
     depends_on:
       - backend
+    command: ["npm", "start"]
 
   mariadb:
     image: mariadb:latest
