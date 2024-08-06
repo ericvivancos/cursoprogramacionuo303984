@@ -10,6 +10,9 @@ import LoginForm from './components/LoginForm';
 import { Layout } from 'antd';
 import PrivateRoute from './components/PrivateRoute';
 import FriendsPage from './pages/FriendsPage';
+import PresentList from './components/PresentList';
+import EditPresentForm from './components/EditPresentForm';
+import CreatePresentForm from './components/CreatePresentForm';
 const { Content } = Layout;
 
 const App = () => (
@@ -23,6 +26,9 @@ const App = () => (
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path='/friends' element={<PrivateRoute><FriendsPage/></PrivateRoute>} />
+            <Route path='/presents' element={<PrivateRoute><PresentList/></PrivateRoute>} />
+            <Route path='/present/create' element={<PrivateRoute><CreatePresentForm/></PrivateRoute>} />
+            <Route path="/presents/edit/:id" element={<PrivateRoute><EditPresentForm /></PrivateRoute>} />
             {/* Agrega otras rutas aquí */}
           </Routes>
         </Content>
