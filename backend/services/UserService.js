@@ -59,5 +59,13 @@ module.exports = {
         } catch (error) {
             throw new Error("Error al cerrar la sesión del usuario: " + error.message);
         }
+    },
+
+    getUserByApiKey: async (apiKey) => {
+        const user = await userRepository.getUserByApiKey(apiKey);
+        if(!user){
+            throw new Error("Usuario n encontrado");
+        }
+        return user;
     }
 };

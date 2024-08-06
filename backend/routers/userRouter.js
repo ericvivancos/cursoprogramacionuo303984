@@ -60,4 +60,15 @@ const authMiddleware = require('../middlewares/authMiddleware');
             res.status(500).json({ error: error.message });
         }
     });
+
+    router.get("/me",authMiddleware.authenticationToken,async (req, res) => {
+        try{
+            const apiKey = req.header('Authorization')?.split(' ')[1];
+            const user = await userService.getUserByApiKey(apiKey);
+            res.status(200).json(user);
+        } catch(error) {
+            console.error('Error al obtener información del usuario:', error.message);
+            res.status(500).json({ error: error.message });
+        }
+    });
 module.exports = router;

@@ -5,22 +5,77 @@ import { query } from '../utils/apiUtils';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [logoutMessage, setLogoutMessage] = useState('');
+  const [authState, setAuthState] = useState({
+    isAuthenticated: false,
+    loading: true,
+    user: null,
+    logoutMessage: ''
+  });
 
   useEffect(() => {
-    const token = getToken();
-    if (token) {
-      setIsAuthenticated(true);
-    }
-    setLoading(false);
-  }, []);
+    const initializeAuth = async () => {
+      const token = getToken();
+      if (token) {
+        try {
+          const response = await query('GET', 'users/me', {}, token);
+          if (response.data.username) {
+            setAuthState({
+              isAuthenticated: true,
+              loading: false,
+              user: response.data.username,
+              logoutMessage: ''
+            });
+          } else {
+            setAuthState({
+              isAuthenticated: false,
+              loading: false,
+              user: null,
+              logoutMessage: ''
+            });
+          }
+        } catch (error) {
+          console.error('Error al obtener información del usuario:', error.message);
+          setAuthState({
+            isAuthenticated: false,
+            loading: false,
+            user: null,
+            logoutMessage: ''
+          });
+        }
+      } else {
+        setAuthState({
+          isAuthenticated: false,
+          loading: false,
+          user: null,
+          logoutMessage: ''
+        });
+      }
+    };
 
-  const login = (token) => {
-  
+    initializeAuth();
+  }, []);
+  const login = async (token) => {
     setToken(token);
-    setIsAuthenticated(true);
+    try {
+      const response = await query('GET', 'users/me', {}, token);
+      console.log(response);
+      if (response.data && response.data.username) {
+        setAuthState({
+          isAuthenticated: true,
+          loading: false,
+          user: response.data.username,
+          logoutMessage: ''
+        });
+      }
+    } catch (error) {
+      console.error('Error al obtener información del usuario durante el login:', error.message);
+      setAuthState({
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+        logoutMessage: ''
+      });
+    }
   };
   const logout = async () => {
     const token = localStorage.getItem('token');
@@ -28,9 +83,17 @@ export const AuthProvider = ({ children }) => {
         try {
           const response = await query('POST', 'users/disconnect', {}, token);
           if(response.data.message){
-            setLogoutMessage(response.data.message)
+            setAuthState((prevState) => ({
+              ...prevState,
+              logoutMessage: response.data.message
+            }));
             removeToken();
-            setIsAuthenticated(false);           
+            setAuthState({
+              isAuthenticated: false,
+              loading: false,
+              user: null,
+              logoutMessage: response.data.message
+            });         
           }
         } catch (error) {
           console.error('Error al cerrar sesión:', error.message);
@@ -38,10 +101,13 @@ export const AuthProvider = ({ children }) => {
       }
   };
   const clearLogoutMessage = () => {
-    setLogoutMessage('');
+    setAuthState((prevState) => ({
+      ...prevState,
+      logoutMessage: ''
+    }));
   }
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loading, login, logout,logoutMessage, clearLogoutMessage }}>
+    <AuthContext.Provider value={{ ...authState, login, logout, clearLogoutMessage }}>
       {children}
     </AuthContext.Provider>
   );

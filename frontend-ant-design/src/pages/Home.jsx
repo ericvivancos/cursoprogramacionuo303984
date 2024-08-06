@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { Button } from 'antd';
 
 const Home = () => {
+  const { isAuthenticated, user, logout } = useContext(AuthContext);
+
   return (
     <div>
-      <h1>Bienvenido a la página de inicio</h1>
-      <p>Solo puedes ver esta página si estás autenticado.</p>
+      {isAuthenticated ? (
+        <div>
+          <h1>Bienvenido/a, {user}!</h1>
+        </div>
+      ) : (
+        <div>
+          <h1>Bienvenido a nuestra aplicación</h1>
+        </div>
+      )}
     </div>
   );
 };

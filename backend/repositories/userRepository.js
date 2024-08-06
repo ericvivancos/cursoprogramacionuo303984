@@ -55,4 +55,14 @@ module.exports = {
     const result = await query('SELECT * FROM active_keys WHERE api_key = ?', [apiKey]);
     return result[0]; // Suponiendo que la apiKey es única y solo hay una asociada al usuario
   },
+  getUserByApiKey: async (apiKey) => {
+    const result = await query(`
+        SELECT users.id, users.email, users.username
+        FROM users
+        JOIN active_keys ON users.id = active_keys.user_id
+        WHERE active_keys.api_key = ?
+    `, [apiKey]);
+
+    return result[0];
+},
 };
