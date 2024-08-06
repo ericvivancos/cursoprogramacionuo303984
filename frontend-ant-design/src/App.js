@@ -13,6 +13,7 @@ import FriendsPage from './pages/FriendsPage';
 import PresentList from './components/PresentList';
 import EditPresentForm from './components/EditPresentForm';
 import CreatePresentForm from './components/CreatePresentForm';
+import SearchGiftsPage from './pages/SearchGiftsPage';
 const { Content } = Layout;
 
 const App = () => (
@@ -29,11 +30,11 @@ const App = () => (
             <Route path='/presents' element={<PrivateRoute><PresentList/></PrivateRoute>} />
             <Route path='/present/create' element={<PrivateRoute><CreatePresentForm/></PrivateRoute>} />
             <Route path="/presents/edit/:id" element={<PrivateRoute><EditPresentForm /></PrivateRoute>} />
+            <Route path="/search-gifts" element={<PrivateRoute><SearchGiftsPage /></PrivateRoute>} />
             {/* Agrega otras rutas aquí */}
           </Routes>
         </Content>
-      </Layout>
-      
+      </Layout>     
     </Router>
   </AuthProvider>
 );
