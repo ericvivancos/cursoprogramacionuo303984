@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [logoutMessage, setLogoutMessage] = useState('');
 
   useEffect(() => {
@@ -13,6 +14,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       setIsAuthenticated(true);
     }
+    setLoading(false);
   }, []);
 
   const login = (token) => {
@@ -39,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     setLogoutMessage('');
   }
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout,logoutMessage, clearLogoutMessage }}>
+    <AuthContext.Provider value={{ isAuthenticated, loading, login, logout,logoutMessage, clearLogoutMessage }}>
       {children}
     </AuthContext.Provider>
   );

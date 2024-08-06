@@ -8,6 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import RegisterPage from './pages/RegisterPage';
 import LoginForm from './components/LoginForm';
 import { Layout } from 'antd';
+import PrivateRoute from './components/PrivateRoute';
 const { Content } = Layout;
 
 const App = () => (
@@ -17,7 +18,7 @@ const App = () => (
         <Navbar/>
         <Content style={{ padding: '0 50px', marginTop: 64}}>
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginForm />} />
             {/* Agrega otras rutas aquí */}
