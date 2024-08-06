@@ -15,8 +15,17 @@ const Navbar = () => {
           </Menu.Item>
           {isAuthenticated ? (
             <>
+             <Menu.Item key="friends">
+                <Link to="/friends">Amigos</Link>
+              </Menu.Item>
               <Menu.Item key="presents">
-                <Link to="/presents">Regalos</Link>
+                <Link to="/presents">Mis Regalos</Link>
+              </Menu.Item>
+              <Menu.Item key="present-create">
+                <Link to="/present/create">Añadir Regalo</Link>
+              </Menu.Item>
+              <Menu.Item key="search-gifts">
+                <Link to="/search-gifts">Regalar a un amigo</Link>
               </Menu.Item>
               <Menu.Item key="logout" style={{ marginLeft: 'auto' }}>
                 <Button type="primary" onClick={logout}>

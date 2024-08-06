@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginForm from './components/LoginForm';
 import { Layout } from 'antd';
 import PrivateRoute from './components/PrivateRoute';
+import FriendsPage from './pages/FriendsPage';
 const { Content } = Layout;
 
 const App = () => (
@@ -21,6 +22,7 @@ const App = () => (
             <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route path='/friends' element={<PrivateRoute><FriendsPage/></PrivateRoute>} />
             {/* Agrega otras rutas aquí */}
           </Routes>
         </Content>
