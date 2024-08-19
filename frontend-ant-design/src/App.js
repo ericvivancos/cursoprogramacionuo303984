@@ -12,6 +12,7 @@ import PresentList from './components/PresentList';
 import EditPresentForm from './components/EditPresentForm';
 import CreatePresentForm from './components/CreatePresentForm';
 import SearchGiftsPage from './pages/SearchGiftsPage';
+import CustomFooter from './components/CustomFooter';
 
 const { Content } = Layout;
 
@@ -26,22 +27,23 @@ const AuthConsumer = () => {
 
   return (
     <Router>
-      <Layout>
+      <Layout style={{ minHeight: '100vh' }}> {/* Asegura que el layout ocupe toda la pantalla */}
         <Navbar />
-        <Content style={{ padding: '0 50px', marginTop: 64 }}>
+        <Content style={{ padding: '0 50px', marginTop: 64, flex: 1 }}> {/* flex: 1 permite que el contenido crezca según sea necesario */}
           <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
-            <Route path="/home" element={<Home /> }/>
-            <Route path="/register" element={isAuthenticated ? <Navigate to="/home" /> : <RegisterPage />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/signup" element={isAuthenticated ? <Navigate to="/home" /> : <RegisterPage />} />
             <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <LoginForm />} />
-            <Route path='/friends' element={<PrivateRoute><FriendsPage /></PrivateRoute>} />
-            <Route path='/presents' element={<PrivateRoute><PresentList /></PrivateRoute>} />
-            <Route path='/present/create' element={<PrivateRoute><CreatePresentForm /></PrivateRoute>} />
+            <Route path="/friends" element={<PrivateRoute><FriendsPage /></PrivateRoute>} />
+            <Route path="/presents" element={<PrivateRoute><PresentList /></PrivateRoute>} />
+            <Route path="/present/create" element={<PrivateRoute><CreatePresentForm /></PrivateRoute>} />
             <Route path="/presents/edit/:id" element={<PrivateRoute><EditPresentForm /></PrivateRoute>} />
             <Route path="/search-gifts" element={<PrivateRoute><SearchGiftsPage /></PrivateRoute>} />
             {/* Agrega otras rutas aquí */}
           </Routes>
         </Content>
+        <CustomFooter /> {/* Footer colocado después de Content */}
       </Layout>
     </Router>
   );

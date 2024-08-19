@@ -56,12 +56,13 @@ const verifyFriendship = async (userEmail, friendEmail) => {
  * @throws {Error} Si el regalo ya ha sido elegido por otro usuario.
  */
 const verifyNotChosen = async (present, userEmail) => {
+  if (present.user_email === userEmail) {
+    throw new Error("No puedes elegir tu propio regalo");
+  }
     if (present.chosen_by) {
       throw new Error("El regalo ya ha sido elegido por otro usuario");
     }
-    if (present.user_email === userEmail) {
-      throw new Error("No puedes elegir tu propio regalo");
-    }
+    
   };
 /**
  * Middleware para verificar que el usuario no se agregue a sí mismo como amigo.
@@ -70,6 +71,9 @@ const verifyNotChosen = async (present, userEmail) => {
  * @param {Function} next - La función next.
  */
 const verifyNotFriends = async (userEmail, friendEmail) => {
+        if(userEmail === friendEmail){
+          throw new Error("No puedes añadirte a ti mismo en la lista de amigos");
+        }
         const areFriends = await friendRepository.areFriends(userEmail,friendEmail);
         if (areFriends) {
           throw new Error("Ya está agregado en la lista de amigos");

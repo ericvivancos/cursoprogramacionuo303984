@@ -45,7 +45,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
             // Listar los regalos de un usuario específico si son amigos
             try {
                 await authMiddleware.verifyUserExists(userEmail);
-                await authMiddleware.verifyFriendship(req.user.email, userEmail);               
+                await authMiddleware.verifyFriendship(userEmail,req.user.email,);               
                 const presents = await presentService.getPresentsByUserEmail(userEmail);
                 res.status(200).json(presents);
             } catch (error) {
